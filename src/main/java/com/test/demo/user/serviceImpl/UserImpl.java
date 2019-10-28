@@ -26,13 +26,14 @@ public class UserImpl implements UserService {
     @Resource
     private FieldsMapper fieldsMapper;
 
+    private static String tableName = "sys_user";//user表名
+
     public void saveUser(UserForm userForm){
         if (userForm == null){
             throw new BusinessException("用户信息不能为空！");
         }
-        String tableName = "sys_user";
         //获取最大数据id
-        int maxDataId = valueMapper.getMaxDataId();
+        int maxDataId = valueMapper.getMaxDataId();//用来表示为同一条数据
         Map<String, String> userMap = new HashMap<>();
         userMap.put("data_id", maxDataId + 1 + "");
         int record = valueMapper.saveData1(userMap, maxDataId + 1, "sys_data");
@@ -53,24 +54,13 @@ public class UserImpl implements UserService {
 
     @Override
     public List<Map<String, Object>> getUsers(int page, int pageCount) {
-        String tableName = "sys_user";
-        List<Map<String, Object>> tables = tablesMapper.selectTables();
-        List<Map<String, Object>> fields = fieldsMapper.selectFields();
-        List<Map<String, Object>> values = valueMapper.getDataByTable(tableName, (page - 1) * pageCount, pageCount);
-        System.out.println(tableName);
+        if (page <= 0)
+            page = 1;
+        if (pageCount <= 0)
+            pageCount = 10;//默认查询10条
+        int pageSize = pageCount * 3;
+        List<Map<String, Object>> values = valueMapper.getDataByTable(tableName, (page - 1) * pageSize + 1, pageSize);
         return values;
-    }
-
-    public Integer getFieldId(String tableName, String fieldName){
-        if (StringUtils.isEmpty(tableName) || StringUtils.isEmpty(fieldName))
-            throw new BusinessException("查询字段ID时，表名和字段名不能为空！");
-        List<Map<String, Object>> fields = fieldsMapper.selectFieldsByTable(tableName);
-        for (Map<String, Object> tabFields : fields){
-            if (fieldName.equals(tabFields.get("field_name"))){
-                return Integer.parseInt(tabFields.get("field_id") + "");
-            }
-        }
-        return 0;
     }
 
 }
