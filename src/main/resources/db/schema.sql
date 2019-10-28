@@ -19,7 +19,7 @@ create table if not exists sys_vals1 (
     val_id int(10) primary key AUTO_INCREMENT,
     val_values varchar(20) NOT NULL DEFAULT '',
     field_id int(10) NOT NULL DEFAULT '',
-    log_id int(10) not null DEFAULT 0
+    data_id int(10) not null DEFAULT 0
 )
 COMMENT = '表值1';
 
@@ -27,7 +27,7 @@ create table if not exists sys_vals2 (
     val_id int(10) primary key AUTO_INCREMENT,
     field_id int(10) NOT NULL DEFAULT '',
     val_values varchar(50) NOT NULL DEFAULT '',
-    log_id int(10) not null DEFAULT 0
+    data_id int(10) not null DEFAULT 0
 )
 COMMENT = '表值2';
 

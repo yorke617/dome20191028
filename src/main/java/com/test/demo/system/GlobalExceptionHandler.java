@@ -13,6 +13,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e) {
+        e.printStackTrace();
         return Result.failed(e.getMessage());
     }
 }

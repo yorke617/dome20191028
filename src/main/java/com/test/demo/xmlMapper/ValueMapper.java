@@ -1,6 +1,6 @@
 package com.test.demo.xmlMapper;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -12,14 +12,33 @@ public interface ValueMapper {
      * @param tableName
      * @return
      */
-    public List<Map> getDataByTable(String tableName);
+    public List<Map<String, Object>> getDataByTable(@Param("tableName") String tableName,
+                                                    @Param("startRow") int startRow,
+                                                    @Param("pageSize") int pageSize);
 
     /**
      * 新增用户
-     * @param userMap
-     * @param logId
+     * @param map
+     * @param dataId
      * @return
      */
-    public int saveUser(@Param("userMap") Map<String, String> userMap, @Param("logId") int logId);
+    public int saveData1(@Param("map") Map<String, String> map,
+                         @Param("dataId") int dataId,
+                         @Param("tableName") String tableName);
+    /**
+     * 新增用户
+     * @param map
+     * @param dataId
+     * @return
+     */
+    public int saveData2(@Param("map") Map<String, String> map,
+                         @Param("dataId") int dataId,
+                         @Param("tableName") String tableName);
+
+    /**
+     * 获取最大的数据id
+     * @return
+     */
+    public int getMaxDataId();
 
 }
