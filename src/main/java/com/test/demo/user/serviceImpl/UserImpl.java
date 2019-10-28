@@ -21,10 +21,6 @@ import java.util.Map;
 public class UserImpl implements UserService {
     @Resource
     private ValueMapper valueMapper;
-    @Resource
-    private TablesMapper tablesMapper;
-    @Resource
-    private FieldsMapper fieldsMapper;
 
     private static String tableName = "sys_user";//user表名
 
