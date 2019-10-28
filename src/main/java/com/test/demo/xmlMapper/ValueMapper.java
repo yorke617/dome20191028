@@ -14,6 +14,12 @@ public interface ValueMapper {
      */
     public List<Map> getDataByTable(String tableName);
 
+    /**
+     * 新增用户
+     * @param userMap
+     * @param logId
+     * @return
+     */
     public int saveUser(@Param("userMap") Map<String, String> userMap, @Param("logId") int logId);
 
 }

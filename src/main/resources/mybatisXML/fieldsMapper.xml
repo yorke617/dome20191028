@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.demo.xmlMapper.FieldsMapper">
+
+    <select id="getDataByTable" parameterType="java.lang.String" resultType="map">
+        select b.field_name, c.val_values, c.log_id
+        from sys_tables a, sys_fields b, sys_val_v c
+        where a.tab_id = b.tab_id
+        and b.field_id = c.field_id
+        and a.tab_name = #{tableName}
+        order by c.log_id
+    </select>
+
+    <insert id="saveData1">
+        insert into sys_vals1(field_id, val_values, log_id)
+        values
+        <foreach collection="userMap.entry" item="entry" separator="," index="index">
+            (select field_id from sys_fields where field_name = #{entry.key}, #{entry.value}, #{logId})
+        </foreach>
+    </insert>
+
+</mapper>
